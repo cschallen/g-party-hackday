@@ -1,0 +1,45 @@
+<div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px">
+  <label>
+    Nome: 
+    <input type="text" name="username" id="username">
+  </label>
+  <button id="create_user">Submit</button>
+
+  <i>Loading chat...</i>
+</div>
+
+<script>
+  (function(t,a,l,k,j,s){
+  s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
+  ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
+  .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
+
+
+  Talk.ready.then(function() {
+    var button = document.getElementById('create_user');
+    button.addEventListener('click', function (event) {
+      value = document.getElementById('username').value;
+
+      var me = new Talk.User({
+          id: value,
+          name: value
+      });
+
+      window.talkSession = new Talk.Session({
+        appId: "<%= ENV['TALKJS_APP_ID'] %>",
+        me: me
+      });
+
+      var conversation = window.talkSession.getOrCreateConversation("hello_world");
+      conversation.setParticipant(me);
+      conversation.setAttributes({
+          photoUrl: "https://demo.talkjs.com/img/11.jpg",
+          subject: "Beautiful Steel Preserve for rent!"
+      });
+
+      var chatbox = talkSession.createChatbox(conversation);
+      chatbox.mount(document.getElementById("talkjs-container"));
+
+    });
+  });
+</script>
