@@ -15,3 +15,7 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+import './app_helpers.js'
+import './opentok_video.js'
+import './opentok_screenshare.js'
